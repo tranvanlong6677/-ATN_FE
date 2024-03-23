@@ -25,7 +25,9 @@ import dayjs from "dayjs";
 import { MonitorOutlined } from "@ant-design/icons";
 import { SKILLS_LIST } from "@/config/utils";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { changePassword } from "@/redux/slice/userSlide";
+import { changePassword, updateUser } from "@/redux/slice/userSlide";
+import { useForm } from "antd/es/form/Form";
+import { fetchAccount } from "@/redux/slice/accountSlide";
 
 interface IProps {
   open: boolean;
@@ -35,6 +37,13 @@ interface changePasswordType {
   oldPassword: string;
   newPassword: string;
   newPasswordConfirm: string;
+}
+
+interface IUpdateDataUser {
+  name: string;
+  age: number;
+  gender: string;
+  address: string;
 }
 
 const UserResume = (props: any) => {
@@ -52,7 +61,7 @@ const UserResume = (props: any) => {
     };
     init();
   }, []);
-
+  console.log(">>> check list cv", listCV);
   const columns: ColumnsType<IResume> = [
     {
       title: "STT",
@@ -87,14 +96,18 @@ const UserResume = (props: any) => {
       dataIndex: "",
       render(value, record, index) {
         return (
-          <a
-            href={`${import.meta.env.VITE_BACKEND_URL}/images/resume/${
-              record?.url
-            }`}
-            target="_blank"
-          >
-            Chi tiết
-          </a>
+          <>
+            <a
+              href={`${import.meta.env.VITE_BACKEND_URL}/images/resume/${
+                record?.url
+              }`}
+              target="_blank"
+            >
+              Chi tiết
+            </a>
+
+            <a href={`${record.url}`}>Chi tiết 2</a>
+          </>
         );
       },
     },
@@ -112,8 +125,111 @@ const UserResume = (props: any) => {
   );
 };
 
-const UserUpdateInfo = (props: any) => {
-  return <div>//todo</div>;
+const UserUpdateInfo = () => {
+  const user = useAppSelector((state) => state.account.user);
+  console.log("user", user);
+  const [form] = useForm();
+  const dispatch = useAppDispatch();
+  const onFinish: FormProps<IUpdateDataUser>["onFinish"] = async (values) => {
+    const res = await dispatch(
+      updateUser({
+        name: form.getFieldValue("name"),
+        age: form.getFieldValue("age"),
+        gender: form.getFieldValue("gender"),
+        address: form.getFieldValue("address"),
+      })
+    );
+
+    console.log("check res", res);
+    if (res.payload?.data) {
+      message.success(res.payload?.message);
+      await dispatch(fetchAccount());
+
+      // form.setFieldValue("name", null);
+      // form.setFieldValue("age", null);
+      // form.setFieldValue("gender", null);
+      // form.setFieldValue("address", null);
+    } else {
+      notification.error({
+        message: "Có lỗi xảy ra",
+        description: res.payload?.message,
+      });
+    }
+  };
+
+  const onFinishFailed: FormProps<IUpdateDataUser>["onFinishFailed"] = (
+    errorInfo
+  ) => {
+    console.log("Failed:", errorInfo);
+  };
+  return (
+    <div>
+      <Form
+        name="basic"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        style={{ maxWidth: 600 }}
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+        form={form}
+      >
+        <Form.Item<IUpdateDataUser>
+          label="Tên"
+          name="name"
+          rules={[{ required: true, message: "Please input your name!" }]}
+          initialValue={user.name}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item<IUpdateDataUser>
+          label="Tuổi"
+          name="age"
+          rules={[{ required: true, message: "Please input your age!" }]}
+          initialValue={user.age}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item<IUpdateDataUser>
+          label="Giới tính"
+          name="gender"
+          rules={[{ required: true, message: "Please input gender!" }]}
+          initialValue={user.gender}
+        >
+          {/* <Input /> */}
+          <Select
+            defaultValue={
+              user?.gender.toUpperCase() === "MALE"
+                ? { value: "MALE", label: <span>Nam</span> }
+                : { value: "FEMALE", label: <span>Nữ</span> }
+            }
+            options={[
+              { value: "MALE", label: <span>Nam</span> },
+              { value: "FEMALE", label: <span>Nữ</span> },
+            ]}
+          />
+        </Form.Item>
+
+        <Form.Item<IUpdateDataUser>
+          label="Địa chỉ"
+          name="address"
+          rules={[{ required: true, message: "Please input address!" }]}
+          initialValue={user.address}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" htmlType="submit">
+            Cập nhật người dùng
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
+  );
 };
 
 const JobByEmail = (props: any) => {
@@ -124,7 +240,6 @@ const JobByEmail = (props: any) => {
     const init = async () => {
       const res = await callGetSubscriberSkills();
       if (res && res.data) {
-        console.log(">>> check res.data", res.data);
         form.setFieldValue("skills", res.data.skills);
       }
     };

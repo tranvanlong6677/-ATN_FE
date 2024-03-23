@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { callChangePassword, callFetchUser } from "@/config/api";
+import {
+  callChangePassword,
+  callFetchUser,
+  callUpdateUser,
+} from "@/config/api";
 import { IUser } from "@/types/backend";
 
 interface IState {
@@ -38,6 +42,24 @@ export const changePassword = createAsyncThunk(
     } catch (error) {
       console.log(error);
     }
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  "user/updateUser",
+  async ({
+    name,
+    age,
+    gender,
+    address,
+  }: {
+    name: string;
+    age: number;
+    gender: string;
+    address: string;
+  }) => {
+    const response = await callUpdateUser({ name, age, gender, address });
+    return response;
   }
 );
 
@@ -100,6 +122,28 @@ export const userSlide = createSlice({
     });
 
     builder.addCase(changePassword.fulfilled, (state, action) => {
+      if (action.payload && action.payload.data) {
+        state.isFetching = false;
+        console.log(action);
+      }
+      // Add user to the state array
+
+      // state.courseOrder = action.payload;
+    });
+
+    builder.addCase(updateUser.pending, (state, action) => {
+      state.isFetching = true;
+      // Add user to the state array
+      // state.courseOrder = action.payload;
+    });
+
+    builder.addCase(updateUser.rejected, (state, action) => {
+      state.isFetching = false;
+      // Add user to the state array
+      // state.courseOrder = action.payload;
+    });
+
+    builder.addCase(updateUser.fulfilled, (state, action) => {
       if (action.payload && action.payload.data) {
         state.isFetching = false;
         console.log(action);

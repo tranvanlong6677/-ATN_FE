@@ -76,11 +76,16 @@ export const ALL_PERMISSIONS = {
   USERS: {
     GET_PAGINATE: { method: "GET", apiPath: "/api/v1/users", module: "USERS" },
     CREATE: { method: "POST", apiPath: "/api/v1/users", module: "USERS" },
-    UPDATE: { method: "PATCH", apiPath: "/api/v1/users/:id", module: "USERS" },
+    UPDATE: { method: "PATCH", apiPath: "/api/v1/users", module: "USERS" },
     DELETE: { method: "DELETE", apiPath: "/api/v1/users/:id", module: "USERS" },
     CHANGE_PASSWORD: {
       method: "PATCH",
       apiPath: "/api/v1/users/change-password",
+      module: "USERS",
+    },
+    UPDATE_BY_ID: {
+      method: "PATCH",
+      apiPath: "/api/v1/users/:id",
       module: "USERS",
     },
   },

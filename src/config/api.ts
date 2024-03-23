@@ -57,9 +57,15 @@ export const callLogout = () => {
 /**
  * Upload single file
  */
-export const callUploadSingleFile = (file: any, folderType: string) => {
+export const callUploadSingleFile = (
+  file: any,
+  folderType: string,
+  jobId: string
+) => {
   const bodyFormData = new FormData();
   bodyFormData.append("fileUpload", file);
+  bodyFormData.append("jobId", jobId);
+
   return axios<IBackendRes<{ fileName: string }>>({
     method: "post",
     url: "/api/v1/files/upload",
@@ -126,8 +132,10 @@ export const callCreateUser = (user: IUser) => {
   return axios.post<IBackendRes<IUser>>("/api/v1/users", { ...user });
 };
 
-export const callUpdateUser = (user: IUser) => {
-  return axios.patch<IBackendRes<IUser>>(`/api/v1/users`, { ...user });
+export const callUpdateUserByAdmin = (user: IUser) => {
+  return axios.patch<IBackendRes<IUser>>(`/api/v1/users/${user._id}`, {
+    ...user,
+  });
 };
 
 export const callDeleteUser = (id: string) => {
@@ -138,6 +146,20 @@ export const callFetchUser = (query: string) => {
   return axios.get<IBackendRes<IModelPaginate<IUser>>>(
     `/api/v1/users?${query}`
   );
+};
+
+export const callUpdateUser = ({
+  name,
+  age,
+  gender,
+  address,
+}: {
+  name: string;
+  age: number;
+  gender: string;
+  address: string;
+}) => {
+  return axios.patch(`/api/v1/users`, { name, age: +age, gender, address });
 };
 
 export const callChangePassword = ({
@@ -182,9 +204,8 @@ export const callFetchJobById = (id: string) => {
  * 
 Module Resume
  */
-export const callCreateResume = (url: string, companyId: any, jobId: any) => {
+export const callCreateResume = (companyId: any, jobId: any) => {
   return axios.post<IBackendRes<IResume>>("/api/v1/resumes", {
-    url,
     companyId,
     jobId,
   });

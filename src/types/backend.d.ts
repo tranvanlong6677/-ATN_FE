@@ -3,6 +3,7 @@ export interface IBackendRes<T> {
   message: string;
   statusCode: number | string;
   data?: T;
+  body?: any;
 }
 
 export interface IChangePassword {}
@@ -22,6 +23,9 @@ export interface IAccount {
     _id: string;
     email: string;
     name: string;
+    gender: string;
+    age: string;
+    address: string;
     role: {
       _id: string;
       name: string;
