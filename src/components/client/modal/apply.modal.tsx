@@ -31,7 +31,7 @@ const ApplyModal = (props: IProps) => {
     (state) => state.account.isAuthenticated
   );
   const user = useAppSelector((state) => state.account.user);
-  const [urlCV, setUrlCV] = useState<string>("");
+  // const [urlCV, setUrlCV] = useState<string>("");
   const [fileUploadInput, setFlieUploadInput] = useState<File>();
   const navigate = useNavigate();
 
@@ -56,19 +56,19 @@ const ApplyModal = (props: IProps) => {
               jobDetail?._id ?? ""
             );
             if (res && res.data) {
-              setUrlCV(res.data.fileName);
+              // setUrlCV(res.data.fileName);
               message.success("Rải CV thành công!");
               // if (onSuccess) onSuccess("ok");
             }
           } catch (error) {
-            setUrlCV("");
+            // setUrlCV("");
+          } finally {
+            if (!fileUploadInput && isAuthenticated) {
+              message.error("Vui lòng upload CV!");
+              return;
+            }
+            setIsModalOpen(false);
           }
-
-          if (!urlCV && isAuthenticated) {
-            message.error("Vui lòng upload CV!");
-            return;
-          }
-          setIsModalOpen(false);
         } else {
           notification.error({
             message: "Có lỗi xảy ra",
@@ -98,15 +98,16 @@ const ApplyModal = (props: IProps) => {
       //   }
     },
     onChange(info) {
+      // info.file.status = "done";
       if (info.file.status !== "uploading") {
         // console.log(info.file, info.fileList);
       }
       if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
+        message.success(`${info.file.name} file đã sẵn sàng để upload`);
       } else if (info.file.status === "error") {
         message.error(
           info?.file?.error?.event?.message ??
-            "Đã có lỗi xảy ra khi upload file."
+            "Đã có lỗi xảy ra với file upload."
         );
       }
     },

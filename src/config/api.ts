@@ -60,11 +60,13 @@ export const callLogout = () => {
 export const callUploadSingleFile = (
   file: any,
   folderType: string,
-  jobId: string
+  jobId?: string
 ) => {
   const bodyFormData = new FormData();
   bodyFormData.append("fileUpload", file);
-  bodyFormData.append("jobId", jobId);
+  if (jobId) {
+    bodyFormData.append("jobId", jobId);
+  }
 
   return axios<IBackendRes<{ fileName: string }>>({
     method: "post",
@@ -231,6 +233,10 @@ export const callFetchResumeById = (id: string) => {
 
 export const callFetchResumeByUser = () => {
   return axios.post<IBackendRes<IResume[]>>(`/api/v1/resumes/by-user`);
+};
+
+export const callFetchResumeInWeek = () => {
+  return axios.post(`/api/v1/resumes/in-week`);
 };
 
 /**

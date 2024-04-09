@@ -84,11 +84,12 @@ const UserResume = (props: any) => {
       title: "Trạng thái",
       dataIndex: "status",
     },
+
     {
-      title: "Ngày rải CV",
+      title: "Update CV gần nhất",
       dataIndex: "createdAt",
       render(value, record, index) {
-        return <>{dayjs(record.createdAt).format("DD-MM-YYYY HH:mm:ss")}</>;
+        return <>{dayjs(record.updatedAt).format("DD-MM-YYYY HH:mm:ss")}</>;
       },
     },
     {
@@ -97,16 +98,9 @@ const UserResume = (props: any) => {
       render(value, record, index) {
         return (
           <>
-            <a
-              href={`${import.meta.env.VITE_BACKEND_URL}/images/resume/${
-                record?.url
-              }`}
-              target="_blank"
-            >
-              Chi tiết
+            <a href={`${record.url}`} target="_blank">
+              Chi tiết CV
             </a>
-
-            <a href={`${record.url}`}>Chi tiết 2</a>
           </>
         );
       },
@@ -120,6 +114,7 @@ const UserResume = (props: any) => {
         dataSource={listCV}
         loading={isFetching}
         pagination={false}
+        size="large"
       />
     </div>
   );
