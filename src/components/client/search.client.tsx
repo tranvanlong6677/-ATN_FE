@@ -1,4 +1,4 @@
-import { Button, Col, Form, Row, Select } from "antd";
+import { Button, Col, Form, FormProps, Row, Select, notification } from "antd";
 import {
   DownOutlined,
   EnvironmentOutlined,
@@ -7,17 +7,49 @@ import {
 import { LOCATION_LIST, SKILLS_LIST } from "@/config/utils";
 import { ProForm } from "@ant-design/pro-components";
 import { useState } from "react";
-
+import { callFetchJob, callSearchJob } from "@/config/api";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "@/redux/hooks";
+import { searchJob } from "@/redux/slice/jobSlide";
+type FieldType = {
+  skills: string[];
+  location: string[];
+};
 const SearchClient = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const optionsSkills = SKILLS_LIST;
   const optionsLocations = LOCATION_LIST;
   const [form] = Form.useForm();
-  const [locationSelected, setLocationSelected] = useState<String>("");
+  const [locationSelected, setLocationSelected] = useState<String[]>([]);
 
-  const onFinish = async (values: any) => {};
-  const searchJobFunction = () => {
-    console.log("searchJobFunction");
+  const [current, setCurrent] = useState(1);
+  const [pageSize, setPageSize] = useState(4);
+  const [filter, setFilter] = useState("");
+  const [sortQuery, setSortQuery] = useState("sort=-updatedAt");
+
+  const onFinish = async (values: FieldType) => {
+    localStorage.setItem("isSearching", "true");
+
+    let query = `current=${current}&pageSize=${pageSize}`;
+    if (filter) {
+      query += `&${filter}`;
+    }
+    if (sortQuery) {
+      query += `&${sortQuery}`;
+    }
+    try {
+      localStorage.setItem("isSearching", "true");
+      localStorage.setItem("dataSearching", JSON.stringify(values));
+
+      const res = await dispatch(searchJob({ values, query }));
+      navigate("/job");
+    } catch (error) {
+      notification.error({ message: "Error" });
+    }
   };
+  const searchJobFunction = () => {};
   return (
     <ProForm
       form={form}
@@ -35,7 +67,7 @@ const SearchClient = () => {
             <Select
               mode="multiple"
               allowClear
-              showArrow={false}
+              suffixIcon={null}
               style={{ width: "100%" }}
               placeholder={
                 <>
@@ -62,12 +94,18 @@ const SearchClient = () => {
               }
               optionLabelProp="label"
               options={optionsLocations}
-              onChange={(e) => setLocationSelected(e.target.value)}
+              onChange={(e: string[]) => {
+                setLocationSelected(e);
+              }}
             />
           </ProForm.Item>
         </Col>
         <Col span={12} md={4}>
-          <Button type="primary" onClick={() => searchJobFunction()}>
+          <Button
+            type="primary"
+            // onClick={() => searchJobFunction()}
+            htmlType="submit"
+          >
             Search
           </Button>
         </Col>

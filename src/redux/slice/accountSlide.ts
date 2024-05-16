@@ -6,7 +6,6 @@ export const fetchAccount = createAsyncThunk(
   "account/fetchAccount",
   async () => {
     const response = await callFetchAccount();
-    console.log("response", response);
     return response.data;
   }
 );
@@ -24,6 +23,10 @@ interface IState {
     gender: string;
     address: string;
     role: {
+      _id: string;
+      name: string;
+    };
+    company: {
       _id: string;
       name: string;
     };
@@ -54,6 +57,10 @@ const initialState: IState = {
       _id: "",
       name: "",
     },
+    company: {
+      _id: "",
+      name: "",
+    },
     permissions: [],
   },
 
@@ -77,6 +84,10 @@ export const accountSlide = createSlice({
       state.user.name = action.payload.name;
       state.user.role = action?.payload?.role;
       state.user.permissions = action?.payload?.permissions;
+      state.user.address = action?.payload?.permissions;
+      state.user.gender = action?.payload?.gender;
+      state.user.age = action?.payload?.age;
+      state.user.company = action?.payload?.company;
     },
     setLogoutAction: (state, action) => {
       localStorage.removeItem("access_token");
@@ -89,6 +100,10 @@ export const accountSlide = createSlice({
         gender: "",
         address: "",
         role: {
+          _id: "",
+          name: "",
+        },
+        company: {
           _id: "",
           name: "",
         },
@@ -121,6 +136,7 @@ export const accountSlide = createSlice({
         state.user.age = action?.payload?.user?.age;
         state.user.gender = action?.payload?.user?.gender;
         state.user.address = action?.payload?.user?.address;
+        state.user.company = action?.payload?.user?.company;
       }
     });
 

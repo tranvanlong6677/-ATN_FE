@@ -60,12 +60,16 @@ export const callLogout = () => {
 export const callUploadSingleFile = (
   file: any,
   folderType: string,
-  jobId?: string
+  jobId?: string,
+  companyId?: string
 ) => {
   const bodyFormData = new FormData();
   bodyFormData.append("fileUpload", file);
   if (jobId) {
     bodyFormData.append("jobId", jobId);
+  }
+  if (companyId) {
+    bodyFormData.append("companyId", companyId);
   }
 
   return axios<IBackendRes<{ fileName: string }>>({
@@ -86,14 +90,12 @@ Module Company
 export const callCreateCompany = (
   name: string,
   address: string,
-  description: string,
-  logo: string
+  description: string
 ) => {
   return axios.post<IBackendRes<ICompany>>("/api/v1/companies", {
     name,
     address,
     description,
-    logo,
   });
 };
 
@@ -101,14 +103,13 @@ export const callUpdateCompany = (
   id: string,
   name: string,
   address: string,
-  description: string,
-  logo: string
+  description: string
 ) => {
-  return axios.patch<IBackendRes<ICompany>>(`/api/v1/companies/${id}`, {
+  return axios.patch(`/api/v1/companies/${id}`, {
     name,
     address,
     description,
-    logo,
+    // logo,
   });
 };
 
@@ -171,7 +172,6 @@ export const callChangePassword = ({
   oldPassword: string;
   newPassword: string;
 }) => {
-  console.log("call");
   return axios.patch(`/api/v1/users/change-password`, {
     oldPassword,
     newPassword,
@@ -200,6 +200,25 @@ export const callFetchJob = (query: string) => {
 
 export const callFetchJobById = (id: string) => {
   return axios.get<IBackendRes<IJob>>(`/api/v1/jobs/${id}`);
+};
+
+export const callSearchJob = ({
+  values,
+  query,
+}: {
+  values: {
+    skills: string[];
+    location: string[];
+  };
+  query: string;
+}) => {
+  return axios.post<IBackendRes<IModelPaginate<IJob>>>(
+    `/api/v1/jobs/search-jobs`,
+    {
+      ...values,
+      query,
+    }
+  );
 };
 
 /**

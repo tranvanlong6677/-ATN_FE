@@ -33,15 +33,12 @@ export interface ICompanySelect {
 
 const ModalUser = (props: IProps) => {
   const { openModal, setOpenModal, reloadTable, dataInit, setDataInit } = props;
-  console.log("props", props);
-  // console.log("data init", dataInit);
   const [companies, setCompanies] = useState<ICompanySelect[]>([]);
   const [roles, setRoles] = useState<ICompanySelect>();
 
   const [form] = Form.useForm();
 
   useEffect(() => {
-    console.log("run effect");
     if (dataInit?._id) {
       if (dataInit.company) {
         setCompanies([
@@ -61,12 +58,10 @@ const ModalUser = (props: IProps) => {
       }
     }
   }, [dataInit]);
-  console.log(">>> role effect", roles);
 
   const submitUser = async (valuesForm: any) => {
     const { name, email, password, address, age, gender, role, company } =
       valuesForm;
-    console.log("value form ", role);
     if (dataInit?._id) {
       //update
       const user = {
@@ -256,10 +251,9 @@ const ModalUser = (props: IProps) => {
                 showSearch
                 defaultValue={roles}
                 value={roles}
-                placeholder="Chọn công vai trò"
+                placeholder="Chọn vai trò"
                 fetchOptions={fetchRoleList}
                 onChange={(newValue: any) => {
-                  console.log(">>>>>>>s", newValue);
                   if (newValue?.length === 0 || newValue?.length === 1) {
                     setRoles(newValue as ICompanySelect);
                   }

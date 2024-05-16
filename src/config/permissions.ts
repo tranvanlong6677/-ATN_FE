@@ -20,12 +20,22 @@ export const ALL_PERMISSIONS = {
       apiPath: "/api/v1/companies/:id",
       module: "COMPANIES",
     },
+    GET_BY_ID: {
+      method: "GET",
+      apiPath: "/api/v1/companies/:id",
+      module: "COMPANIES",
+    },
   },
   JOBS: {
     GET_PAGINATE: { method: "GET", apiPath: "/api/v1/jobs", module: "JOBS" },
     CREATE: { method: "POST", apiPath: "/api/v1/jobs", module: "JOBS" },
     UPDATE: { method: "PATCH", apiPath: "/api/v1/jobs/:id", module: "JOBS" },
     DELETE: { method: "DELETE", apiPath: "/api/v1/jobs/:id", module: "JOBS" },
+    GET_BY_ID: {
+      method: "GET",
+      apiPath: "/api/v1/jobs/:id",
+      module: "JOBS",
+    },
   },
   PERMISSIONS: {
     GET_PAGINATE: {
@@ -48,6 +58,11 @@ export const ALL_PERMISSIONS = {
       apiPath: "/api/v1/permissions/:id",
       module: "PERMISSIONS",
     },
+    FETCH_BY_ID: {
+      method: "GET",
+      apiPath: "/api/v1/permissions/:id",
+      module: "PERMISSIONS",
+    },
   },
   RESUMES: {
     GET_PAGINATE: {
@@ -66,12 +81,32 @@ export const ALL_PERMISSIONS = {
       apiPath: "/api/v1/resumes/:id",
       module: "RESUMES",
     },
+    FETCH_IN_WEEK: {
+      method: "POST",
+      apiPath: "/api/v1/resumes/in-week",
+      module: "RESUMES",
+    },
+    FETCH_BY_USER: {
+      method: "POST",
+      apiPath: "/api/v1/resumes/by-user",
+      module: "RESUMES",
+    },
+    GET_BY_ID: {
+      method: "POST",
+      apiPath: "/api/v1/resumes/:id",
+      module: "RESUMES",
+    },
   },
   ROLES: {
     GET_PAGINATE: { method: "GET", apiPath: "/api/v1/roles", module: "ROLES" },
     CREATE: { method: "POST", apiPath: "/api/v1/roles", module: "ROLES" },
     UPDATE: { method: "PATCH", apiPath: "/api/v1/roles/:id", module: "ROLES" },
     DELETE: { method: "DELETE", apiPath: "/api/v1/roles/:id", module: "ROLES" },
+    FETCH_BY_ID: {
+      method: "GET",
+      apiPath: "/api/v1/roles/:id",
+      module: "ROLES",
+    },
   },
   USERS: {
     GET_PAGINATE: { method: "GET", apiPath: "/api/v1/users", module: "USERS" },

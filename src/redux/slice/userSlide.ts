@@ -34,7 +34,6 @@ export const changePassword = createAsyncThunk(
     oldPassword: string;
     newPassword: string;
   }) => {
-    console.log("slice");
     try {
       const response = await callChangePassword({ oldPassword, newPassword });
       //   console.log()

@@ -42,7 +42,6 @@ const ApplyModal = (props: IProps) => {
     } else {
       //todo
       if (jobDetail) {
-        console.log(">>> check job detail", jobDetail);
         const res = await callCreateResume(
           //   urlCV,
           jobDetail?.company?._id,
@@ -100,7 +99,6 @@ const ApplyModal = (props: IProps) => {
     onChange(info) {
       // info.file.status = "done";
       if (info.file.status !== "uploading") {
-        // console.log(info.file, info.fileList);
       }
       if (info.file.status === "done") {
         message.success(`${info.file.name} file đã sẵn sàng để upload`);

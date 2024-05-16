@@ -27,7 +27,7 @@ import { ALL_PERMISSIONS } from "@/config/permissions";
 
 const JobPage = () => {
   const tableRef = useRef<ActionType>();
-
+  const user = useAppSelector((state) => state.account.user);
   const isFetching = useAppSelector((state) => state.job.isFetching);
   const meta = useAppSelector((state) => state.job.meta);
   const jobs = useAppSelector((state) => state.job.result);
@@ -136,41 +136,51 @@ const JobPage = () => {
       title: "Actions",
       hideInSearch: true,
       width: 50,
-      render: (_value, entity, _index, _action) => (
-        <Space>
-          <Access permission={ALL_PERMISSIONS.JOBS.UPDATE} hideChildren>
-            <EditOutlined
-              style={{
-                fontSize: 20,
-                color: "#ffa500",
-              }}
-              type=""
-              onClick={() => {
-                navigate(`/admin/job/upsert?id=${entity._id}`);
-              }}
-            />
-          </Access>
-          <Access permission={ALL_PERMISSIONS.JOBS.DELETE} hideChildren>
-            <Popconfirm
-              placement="leftTop"
-              title={"Xác nhận xóa job"}
-              description={"Bạn có chắc chắn muốn xóa job này ?"}
-              onConfirm={() => handleDeleteJob(entity._id)}
-              okText="Xác nhận"
-              cancelText="Hủy"
+      render: (_value, entity, _index, _action) => {
+        return (
+          <Space>
+            <Access
+              permission={ALL_PERMISSIONS.JOBS.UPDATE}
+              hideChildren
+              skip={user?.company?._id === entity?.company?._id}
             >
-              <span style={{ cursor: "pointer", margin: "0 10px" }}>
-                <DeleteOutlined
-                  style={{
-                    fontSize: 20,
-                    color: "#ff4d4f",
-                  }}
-                />
-              </span>
-            </Popconfirm>
-          </Access>
-        </Space>
-      ),
+              <EditOutlined
+                style={{
+                  fontSize: 20,
+                  color: "#ffa500",
+                }}
+                type=""
+                onClick={() => {
+                  navigate(`/admin/job/upsert?id=${entity._id}`);
+                }}
+              />
+            </Access>
+            <Access
+              permission={ALL_PERMISSIONS.JOBS.DELETE}
+              hideChildren
+              skip={user?.company?._id === entity?.company?._id}
+            >
+              <Popconfirm
+                placement="leftTop"
+                title={"Xác nhận xóa job"}
+                description={"Bạn có chắc chắn muốn xóa job này ?"}
+                onConfirm={() => handleDeleteJob(entity._id)}
+                okText="Xác nhận"
+                cancelText="Hủy"
+              >
+                <span style={{ cursor: "pointer", margin: "0 10px" }}>
+                  <DeleteOutlined
+                    style={{
+                      fontSize: 20,
+                      color: "#ff4d4f",
+                    }}
+                  />
+                </span>
+              </Popconfirm>
+            </Access>
+          </Space>
+        );
+      },
     },
   ];
 
@@ -209,7 +219,6 @@ const JobPage = () => {
 
     return temp;
   };
-
   return (
     <div>
       <Access permission={ALL_PERMISSIONS.JOBS.GET_PAGINATE}>

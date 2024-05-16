@@ -61,7 +61,6 @@ const UserResume = (props: any) => {
     };
     init();
   }, []);
-  console.log(">>> check list cv", listCV);
   const columns: ColumnsType<IResume> = [
     {
       title: "STT",
@@ -122,7 +121,6 @@ const UserResume = (props: any) => {
 
 const UserUpdateInfo = () => {
   const user = useAppSelector((state) => state.account.user);
-  console.log("user", user);
   const [form] = useForm();
   const dispatch = useAppDispatch();
   const onFinish: FormProps<IUpdateDataUser>["onFinish"] = async (values) => {
@@ -135,7 +133,6 @@ const UserUpdateInfo = () => {
       })
     );
 
-    console.log("check res", res);
     if (res.payload?.data) {
       message.success(res.payload?.message);
       await dispatch(fetchAccount());
@@ -300,9 +297,6 @@ const ChangePassword = (props: any) => {
   const onFinish: FormProps<changePasswordType>["onFinish"] = async (
     values
   ) => {
-    console.log(form.getFieldValue("newPassword"));
-    console.log(form.getFieldValue("newPasswordConfirm"));
-
     if (
       !(
         form.getFieldValue("newPassword") ===
@@ -393,7 +387,6 @@ const ManageAccount = (props: IProps) => {
   const [form] = Form.useForm();
 
   const onChange = (key: string) => {
-    // console.log(key);
     form.setFieldValue("oldPassword", null);
     form.setFieldValue("newPassword", null);
     form.setFieldValue("newPasswordConfirm", null);
