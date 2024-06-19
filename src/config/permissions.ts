@@ -115,7 +115,7 @@ export const ALL_PERMISSIONS = {
     DELETE: { method: "DELETE", apiPath: "/api/v1/users/:id", module: "USERS" },
     CHANGE_PASSWORD: {
       method: "PATCH",
-      apiPath: "/api/v1/users/change-password",
+      apiPath: "/api/v1/users/password/change",
       module: "USERS",
     },
     UPDATE_BY_ID: {
@@ -123,6 +123,9 @@ export const ALL_PERMISSIONS = {
       apiPath: "/api/v1/users/:id",
       module: "USERS",
     },
+  },
+  MAILS: {
+    SEND_EMAIL: { method: "GET", apiPath: "/api/v1/mail", module: "MAILS" },
   },
 };
 
@@ -136,4 +139,5 @@ export const ALL_MODULES = {
   ROLES: "ROLES",
   USERS: "USERS",
   SUBSCRIBERS: "SUBSCRIBERS",
+  MAILS: "MAILS",
 };

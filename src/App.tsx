@@ -32,6 +32,7 @@ import ClientCompanyPage from "./pages/company";
 import ClientCompanyDetailPage from "./pages/company/detail";
 import AboutPage from "./pages/about";
 import "./styles/styles.scss";
+import MailPage from "./pages/admin/mail";
 
 const LayoutClient = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,7 +46,7 @@ const LayoutClient = () => {
   }, [location]);
 
   return (
-    <div className="layout-app" ref={rootRef}>
+    <div className="layout-app" ref={rootRef} lang="en">
       <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <div className={styles["content-app"]}>
         <Outlet context={[searchTerm, setSearchTerm]} />
@@ -58,7 +59,6 @@ const LayoutClient = () => {
 export default function App() {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.account.isLoading);
-
   useEffect(() => {
     if (
       window.location.pathname === "/login" ||
@@ -91,7 +91,7 @@ export default function App() {
       path: "/admin",
       element: (
         <LayoutApp>
-          <LayoutAdmin />{" "}
+          <LayoutAdmin />
         </LayoutApp>
       ),
       errorElement: <NotFound />,
@@ -165,6 +165,14 @@ export default function App() {
           element: (
             <ProtectedRoute>
               <RolePage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "mail",
+          element: (
+            <ProtectedRoute>
+              <MailPage />
             </ProtectedRoute>
           ),
         },

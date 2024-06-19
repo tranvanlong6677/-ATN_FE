@@ -92,6 +92,50 @@
   }
 }
 
+.img-logo-home {
+  width: 150px;
+  height: 150px;
+  @media (min-width: 1000px) {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+.home-logo-container {
+  display: flex;
+  // justify-content: center;
+  gap: 10px;
+  .content {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    h1 {
+      @media (max-width: 650px) {
+        font-size: 24px;
+      }
+    }
+    button {
+      max-width: 200px;
+      width: 100%;
+    }
+  }
+}
+.loading-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
 html {
   height: 100%;
 }

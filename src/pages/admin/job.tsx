@@ -69,15 +69,15 @@ const JobPage = () => {
       dataIndex: "name",
       sorter: true,
     },
-    {
-      title: "Mức lương",
-      dataIndex: "salary",
-      sorter: true,
-      render(dom, entity, index, action, schema) {
-        const str = "" + entity.salary;
-        return <>{str?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} đ</>;
-      },
-    },
+    // {
+    //   title: "Mức lương",
+    //   dataIndex: "salary",
+    //   sorter: true,
+    //   render(dom, entity, index, action, schema) {
+    //     const str = "" + entity.salary;
+    //     return <>{str?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} đ</>;
+    //   },
+    // },
     {
       title: "Level",
       dataIndex: "level",
@@ -142,7 +142,10 @@ const JobPage = () => {
             <Access
               permission={ALL_PERMISSIONS.JOBS.UPDATE}
               hideChildren
-              skip={user?.company?._id === entity?.company?._id}
+              skip={
+                user?.company?._id !== entity?.company?._id &&
+                user?.role?.name === "HR"
+              }
             >
               <EditOutlined
                 style={{
@@ -158,7 +161,10 @@ const JobPage = () => {
             <Access
               permission={ALL_PERMISSIONS.JOBS.DELETE}
               hideChildren
-              skip={user?.company?._id === entity?.company?._id}
+              skip={
+                user?.company?._id !== entity?.company?._id &&
+                user?.role?.name === "HR"
+              }
             >
               <Popconfirm
                 placement="leftTop"

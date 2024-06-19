@@ -1,5 +1,5 @@
 import { HomeOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
-import logo from "../../../public/logo.jpg";
+import logo from "/logo.jpg";
 import styles from "@/styles/client.module.scss";
 import { useNavigate } from "react-router-dom";
 

@@ -9,13 +9,13 @@ interface IProps {
     apiPath: string;
     module: string;
   };
-  skip?: boolean;
+  skip?: boolean | null;
 }
 
 const Access = (props: IProps) => {
   //set default: hideChildren = false => vẫn render children
   // hideChildren = true => ko render children, ví dụ hide button (button này check quyền)
-  const { permission, hideChildren = false, skip } = props;
+  const { permission, hideChildren = false, skip = null } = props;
   const [allow, setAllow] = useState<boolean>(true);
   const permissions = useAppSelector((state) => state.account.user.permissions);
 
@@ -32,11 +32,14 @@ const Access = (props: IProps) => {
       } else setAllow(false);
     }
   }, [permissions]);
-
   return (
     <>
-      {allow === true || skip ? (
-        <>{props.children}</>
+      {allow === true ? (
+        skip === true ? (
+          <></>
+        ) : (
+          <>{props.children}</>
+        )
       ) : (
         <>
           {hideChildren === false ? (

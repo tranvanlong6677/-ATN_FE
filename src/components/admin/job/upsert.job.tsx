@@ -33,10 +33,14 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { CheckSquareOutlined } from "@ant-design/icons";
 import enUS from "antd/lib/locale/en_US";
-import dayjs from "dayjs";
 import { IJob } from "@/types/backend";
 import { useAppSelector } from "@/redux/hooks";
+import dayjs from "dayjs";
+import weekday from "dayjs/plugin/weekday";
+import localeData from "dayjs/plugin/localeData";
 
+dayjs.extend(weekday);
+dayjs.extend(localeData);
 const ViewUpsertJob = (props: any) => {
   const [companies, setCompanies] = useState<ICompanySelect[]>([]);
   const user = useAppSelector((state) => state.account.user);
@@ -408,7 +412,7 @@ const ViewUpsertJob = (props: any) => {
                 />
               </Col>
               <Col span={24} md={6}>
-                <ProFormSwitch
+                {/* <ProFormSwitch
                   label="Trạng thái"
                   name="isActive"
                   checkedChildren="ACTIVE"
@@ -417,7 +421,7 @@ const ViewUpsertJob = (props: any) => {
                   fieldProps={{
                     defaultChecked: true,
                   }}
-                />
+                /> */}
               </Col>
               <Col span={24}>
                 <ProForm.Item

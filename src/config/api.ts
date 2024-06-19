@@ -172,7 +172,7 @@ export const callChangePassword = ({
   oldPassword: string;
   newPassword: string;
 }) => {
-  return axios.patch(`/api/v1/users/change-password`, {
+  return axios.patch(`/api/v1/users/password/change`, {
     oldPassword,
     newPassword,
   });
@@ -209,9 +209,12 @@ export const callSearchJob = ({
   values: {
     skills: string[];
     location: string[];
+    level: string;
+    salary?: string;
   };
   query: string;
 }) => {
+  console.log(">>> check values: " + JSON.stringify(values));
   return axios.post<IBackendRes<IModelPaginate<IJob>>>(
     `/api/v1/jobs/search-jobs`,
     {
@@ -346,4 +349,10 @@ export const callFetchSubscriber = (query: string) => {
 
 export const callFetchSubscriberById = (id: string) => {
   return axios.get<IBackendRes<ISubscribers>>(`/api/v1/subscribers/${id}`);
+};
+
+// MAIL
+
+export const callSendEmail = () => {
+  return axios.get(`/api/v1/mail`);
 };

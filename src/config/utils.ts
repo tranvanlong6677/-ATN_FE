@@ -11,8 +11,27 @@ export const SKILLS_LIST = [
   { label: "Frontend", value: "FRONTEND" },
   { label: "Backend", value: "BACKEND" },
   { label: "Fullstack", value: "FULLSTACK" },
+  { label: "Dot.Net", value: "DOTNET" },
+  { label: "Spring Boot", value: "SPRINGBOOT" },
+  { label: "IT Support", value: "ITSUPPORT" },
+  { label: "Tester", value: "TESTER" },
 ];
 
+export const LEVEL_LIST = [
+  { label: "Intern", value: "INTERN" },
+  { label: "Fresher", value: "FRESHER" },
+  { label: "Junior", value: "JUNIOR" },
+  { label: "Middle", value: "MIDDLE" },
+  { label: "Senior", value: "SENIOR" },
+];
+export const SALARY_LIST = [
+  { label: "0 - 5M", value: "0" },
+  { label: "5M - 10M", value: "1" },
+  { label: "10M - 15M", value: "2" },
+  { label: "15M - 20M", value: "3" },
+  { label: "20M - 25M", value: "4" },
+  { label: "Other", value: "5" },
+];
 export const LOCATION_LIST = [
   { label: "Hà Nội", value: "HANOI" },
   { label: "Hồ Chí Minh", value: "HOCHIMINH" },
@@ -90,3 +109,14 @@ export function colorMethod(
 export function isDate(value: any) {
   return value instanceof Date;
 }
+
+export const formatDateFunction = (value: Date | string | undefined) => {
+  if (value instanceof Date || typeof value === "string") {
+    const date = new Date(value);
+    const day = date.getUTCDate().toString().padStart(2, "0");
+    const month = (date.getUTCMonth() + 1).toString().padStart(2, "0"); // Tháng bắt đầu từ 0, nên cần cộng thêm 1
+    const year = date.getUTCFullYear();
+    return `${day}/${month}/${year}`;
+  }
+  return "";
+};

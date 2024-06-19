@@ -1,39 +1,31 @@
 import DataTable from "@/components/client/data-table";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { IResume } from "@/types/backend";
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   ActionType,
   ProColumns,
   ProFormSelect,
 } from "@ant-design/pro-components";
-import {
-  Button,
-  Popconfirm,
-  Select,
-  Space,
-  Tag,
-  message,
-  notification,
-} from "antd";
+import { Popconfirm, Space, message, notification } from "antd";
 import { useState, useRef } from "react";
 import dayjs from "dayjs";
 import { callDeleteResume } from "@/config/api";
 import queryString from "query-string";
-import { useNavigate } from "react-router-dom";
 import { fetchResume } from "@/redux/slice/resumeSlide";
 import ViewDetailResume from "@/components/admin/resume/view.resume";
 import { ALL_PERMISSIONS } from "@/config/permissions";
 import Access from "@/components/share/access";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const ResumePage = () => {
+  const navigate = useNavigate();
   const tableRef = useRef<ActionType>();
 
   const isFetching = useAppSelector((state) => state.resume.isFetching);
   const meta = useAppSelector((state) => state.resume.meta);
   const resumes = useAppSelector((state) => state.resume.result);
   const dispatch = useAppDispatch();
-  console.log(">>> check resume", resumes);
   const [dataInit, setDataInit] = useState<IResume | null>(null);
   const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
 
@@ -127,45 +119,43 @@ const ResumePage = () => {
       },
       hideInSearch: true,
     },
-    // {
+    {
+      title: "Actions",
+      hideInSearch: true,
+      width: 50,
+      render: (_value, entity, _index, _action) => (
+        <Space>
+          {/* <EditOutlined
+            style={{
+              fontSize: 20,
+              color: "#ffa500",
+            }}
+            type=""
+            onClick={() => {
+              navigate(`/admin/job/upsert?id=${entity._id}`);
+            }}
+          /> */}
 
-    //     title: 'Actions',
-    //     hideInSearch: true,
-    //     width: 50,
-    //     render: (_value, entity, _index, _action) => (
-    //         <Space>
-    //             <EditOutlined
-    //                 style={{
-    //                     fontSize: 20,
-    //                     color: '#ffa500',
-    //                 }}
-    //                 type=""
-    //                 onClick={() => {
-    //                     navigate(`/admin/job/upsert?id=${entity._id}`)
-    //                 }}
-    //             />
-
-    //             <Popconfirm
-    //                 placement="leftTop"
-    //                 title={"Xác nhận xóa resume"}
-    //                 description={"Bạn có chắc chắn muốn xóa resume này ?"}
-    //                 onConfirm={() => handleDeleteResume(entity._id)}
-    //                 okText="Xác nhận"
-    //                 cancelText="Hủy"
-    //             >
-    //                 <span style={{ cursor: "pointer", margin: "0 10px" }}>
-    //                     <DeleteOutlined
-    //                         style={{
-    //                             fontSize: 20,
-    //                             color: '#ff4d4f',
-    //                         }}
-    //                     />
-    //                 </span>
-    //             </Popconfirm>
-    //         </Space>
-    //     ),
-
-    // },
+          <Popconfirm
+            placement="leftTop"
+            title={"Xác nhận xóa resume"}
+            description={"Bạn có chắc chắn muốn xóa resume này ?"}
+            onConfirm={() => handleDeleteResume(entity._id)}
+            okText="Xác nhận"
+            cancelText="Hủy"
+          >
+            <span style={{ cursor: "pointer", margin: "0 10px" }}>
+              <DeleteOutlined
+                style={{
+                  fontSize: 20,
+                  color: "#ff4d4f",
+                }}
+              />
+            </span>
+          </Popconfirm>
+        </Space>
+      ),
+    },
   ];
 
   const buildQuery = (params: any, sort: any, filter: any) => {
@@ -201,6 +191,8 @@ const ResumePage = () => {
 
     temp +=
       "&populate=companyId,jobId&fields=companyId._id, companyId.name, companyId.logo, jobId._id, jobId.name";
+
+    console.log(">>> check temp: " + temp);
     return temp;
   };
 

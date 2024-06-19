@@ -21,7 +21,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { callLogout } from "@/config/api";
 import { setLogoutAction } from "@/redux/slice/accountSlide";
 import ManageAccount from "./modal/manage.account";
-import imgLogo from "../../../public/logo.jpg";
+import imgLogo from "/logo.jpg";
 const Header = (props: any) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -30,8 +30,9 @@ const Header = (props: any) => {
     (state) => state.account.isAuthenticated
   );
   const user = useAppSelector((state) => state.account.user);
+  console.log(">>> check user", user);
   const [openMobileMenu, setOpenMobileMenu] = useState<boolean>(false);
-
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const [current, setCurrent] = useState("home");
   const location = useLocation();
 
@@ -40,7 +41,15 @@ const Header = (props: any) => {
   useEffect(() => {
     setCurrent(location.pathname);
   }, [location]);
-
+  function handleWindowSizeChange() {
+    setInnerWidth(window.innerWidth);
+  }
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
   const items: MenuProps["items"] = [
     {
       label: <Link to={"/"}>Trang Chủ</Link>,
@@ -77,34 +86,75 @@ const Header = (props: any) => {
     }
   };
 
-  const itemsDropdown = [
-    {
-      label: (
-        <label
-          style={{ cursor: "pointer" }}
-          onClick={() => setOpenManageAccount(true)}
-        >
-          Quản lý tài khoản
-        </label>
-      ),
-      key: "manage-account",
-      icon: <ContactsOutlined />,
-    },
-    {
-      label: <Link to={"/admin"}>Trang Quản Trị</Link>,
-      key: "admin",
-      icon: <DashOutlined />,
-    },
-    {
-      label: (
-        <label style={{ cursor: "pointer" }} onClick={() => handleLogout()}>
-          Đăng xuất
-        </label>
-      ),
-      key: "logout",
-      icon: <LogoutOutlined />,
-    },
-  ];
+  const itemsDropdown =
+    user?.role?.name === "NORMAL_USER"
+      ? [
+          {
+            label: (
+              <label
+                style={{ cursor: "pointer" }}
+                onClick={() => setOpenManageAccount(true)}
+              >
+                Quản lý tài khoản
+              </label>
+            ),
+            key: "manage-account",
+            icon: <ContactsOutlined />,
+          },
+          // {
+          //   label: <Link to={"/admin"}>Trang quản trị </Link>,
+          //   key: "admin",
+          //   icon: <DashOutlined />,
+          // },
+          {
+            label: (
+              <label
+                style={{ cursor: "pointer" }}
+                onClick={() => handleLogout()}
+              >
+                Đăng xuất
+              </label>
+            ),
+            key: "logout",
+            icon: <LogoutOutlined />,
+          },
+        ]
+      : [
+          {
+            label: (
+              <label
+                style={{ cursor: "pointer" }}
+                onClick={() => setOpenManageAccount(true)}
+              >
+                Quản lý tài khoản
+              </label>
+            ),
+            key: "manage-account",
+            icon: <ContactsOutlined />,
+          },
+          {
+            label: (
+              <Link to={"/admin"}>
+                Trang quản trị{" "}
+                {user?.role?.name === "SUPER_ADMIN" ? "Admin" : "HR"}
+              </Link>
+            ),
+            key: "admin",
+            icon: <DashOutlined />,
+          },
+          {
+            label: (
+              <label
+                style={{ cursor: "pointer" }}
+                onClick={() => handleLogout()}
+              >
+                Đăng xuất
+              </label>
+            ),
+            key: "logout",
+            icon: <LogoutOutlined />,
+          },
+        ];
 
   const itemsMobiles = [...items, ...itemsDropdown];
 
@@ -112,7 +162,7 @@ const Header = (props: any) => {
     <>
       <div className={styles["header-section"]}>
         <div className={styles["container"]}>
-          {!isMobile ? (
+          {innerWidth > 1000 ? (
             <div style={{ display: "flex", gap: 30 }}>
               <div className={styles["brand"]}>
                 {/* <FaReact onClick={() => navigate("/")} title="Tìm việc IT" /> */}
@@ -163,7 +213,7 @@ const Header = (props: any) => {
             </div>
           ) : (
             <div className={styles["header-mobile"]}>
-              <span>Your APP</span>
+              <span>VieclamIT</span>
               <MenuFoldOutlined onClick={() => setOpenMobileMenu(true)} />
             </div>
           )}

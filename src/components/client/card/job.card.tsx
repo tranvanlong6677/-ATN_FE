@@ -1,5 +1,10 @@
 import { callFetchJob } from "@/config/api";
-import { LOCATION_LIST, convertSlug, getLocationName } from "@/config/utils";
+import {
+  LOCATION_LIST,
+  convertSlug,
+  formatDateFunction,
+  getLocationName,
+} from "@/config/utils";
 import { IJob } from "@/types/backend";
 import { EnvironmentOutlined, ThunderboltOutlined } from "@ant-design/icons";
 import { Card, Col, Empty, Pagination, Row, Spin } from "antd";
@@ -11,8 +16,10 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { fetchJob, searchJob } from "@/redux/slice/jobSlide";
-dayjs.extend(relativeTime);
+import "dayjs/locale/en";
 
+dayjs.extend(relativeTime);
+dayjs.locale("en");
 interface IProps {
   showPagination?: boolean;
 }
@@ -53,17 +60,36 @@ const JobCard = (props: IProps) => {
       localStorage.getItem("isSearching") === "true" &&
       localStorage.getItem("dataSearching")
     ) {
-      dispatch(
-        searchJob({
-          values: JSON.parse(
-            localStorage.getItem("dataSearching") as string
-          ) as {
-            skills: string[];
-            location: string[];
-          },
-          query,
-        })
-      );
+      if (!JSON.parse(localStorage.getItem("dataSearching") as string).salary) {
+        dispatch(
+          searchJob({
+            values: {
+              ...JSON.parse(localStorage.getItem("dataSearching") as string),
+              salary: "-1",
+            } as {
+              skills: string[];
+              location: string[];
+              salary: string;
+              level: string;
+            },
+            query,
+          })
+        );
+      } else {
+        dispatch(
+          searchJob({
+            values: {
+              ...JSON.parse(localStorage.getItem("dataSearching") as string),
+            } as {
+              skills: string[];
+              location: string[];
+              salary: string;
+              level: string;
+            },
+            query,
+          })
+        );
+      }
     } else {
       dispatch(fetchJob({ query }));
     }
@@ -105,7 +131,7 @@ const JobCard = (props: IProps) => {
   };
 
   return (
-    <div className={`${styles["card-job-section"]}`}>
+    <div className={`${styles["card-job-section"]}`} lang="en">
       <div className={`${styles["job-content"]}`}>
         <Spin spinning={isLoading} tip="Loading...">
           <Row gutter={[20, 20]}>
@@ -115,12 +141,17 @@ const JobCard = (props: IProps) => {
                   isMobile ? styles["dflex-mobile"] : styles["dflex-pc"]
                 }
               >
-                <span className={styles["title"]}>Công Việc Mới Nhất</span>
+                <span className={styles["title"]}>
+                  {localStorage.getItem("isSearching") === "true"
+                    ? "Kết quả tìm kiếm"
+                    : "Công Việc Mới Nhất"}
+                </span>
                 {!showPagination && <Link to="job">Xem tất cả</Link>}
               </div>
             </Col>
 
             {displayJob?.map((item) => {
+              console.log(">>> check item: " + JSON.stringify(item));
               return (
                 <Col span={24} md={12} key={item._id}>
                   <Card
@@ -158,7 +189,8 @@ const JobCard = (props: IProps) => {
                           đ
                         </div>
                         <div className={styles["job-updatedAt"]}>
-                          {dayjs(item.updatedAt).fromNow()}
+                          Từ {formatDateFunction(item.updatedAt)}
+                          {/* {dayjs(item.updatedAt).fromNow()} */}
                         </div>
                       </div>
                     </div>

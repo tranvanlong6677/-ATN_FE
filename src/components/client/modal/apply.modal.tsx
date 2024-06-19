@@ -56,11 +56,18 @@ const ApplyModal = (props: IProps) => {
             );
             if (res && res.data) {
               // setUrlCV(res.data.fileName);
-              message.success("Rải CV thành công!");
+              message.success("Nộp CV thành công!");
               // if (onSuccess) onSuccess("ok");
+            }
+            if (res && res.error) {
+              notification.error({
+                message: "Có lỗi xảy ra",
+                description: res.message,
+              });
             }
           } catch (error) {
             // setUrlCV("");
+            alert("eror");
           } finally {
             if (!fileUploadInput && isAuthenticated) {
               message.error("Vui lòng upload CV!");
@@ -81,7 +88,7 @@ const ApplyModal = (props: IProps) => {
   const propsUpload: UploadProps = {
     maxCount: 1,
     multiple: false,
-    accept: "application/pdf,application/msword, .doc, .docx, .pdf",
+    accept: "application/pdf, .pdf",
     async customRequest({ file, onSuccess, onError }: any) {
       setFlieUploadInput(file);
       //   const res = await callUploadSingleFile(file, "resume");
@@ -119,7 +126,7 @@ const ApplyModal = (props: IProps) => {
         onOk={() => handleOkButton()}
         onCancel={() => setIsModalOpen(false)}
         maskClosable={false}
-        okText={isAuthenticated ? "Rải CV Nào " : "Đăng Nhập Nhanh"}
+        okText={isAuthenticated ? "Nộp CV " : "Đăng Nhập"}
         cancelButtonProps={{ style: { display: "none" } }}
         destroyOnClose={true}
       >
@@ -160,8 +167,7 @@ const ApplyModal = (props: IProps) => {
                     >
                       <Upload {...propsUpload}>
                         <Button icon={<UploadOutlined />}>
-                          Tải lên CV của bạn ( Hỗ trợ *.doc, *.docx, *.pdf, and
-                          &lt; 5MB )
+                          Tải lên CV của bạn ( Hỗ trợ .pdf, and &lt; 5MB )
                         </Button>
                       </Upload>
                     </ProForm.Item>
@@ -172,7 +178,7 @@ const ApplyModal = (props: IProps) => {
           </div>
         ) : (
           <div>
-            Bạn chưa đăng nhập hệ thống. Vui lòng đăng nhập để có thể "Rải CV"
+            Bạn chưa đăng nhập hệ thống. Vui lòng đăng nhập để có thể "Nộp CV"
             bạn nhé -.-
           </div>
         )}

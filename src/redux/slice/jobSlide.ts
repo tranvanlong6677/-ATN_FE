@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { callFetchJob, callSearchJob } from "@/config/api";
+import { callFetchJob, callSearchJob, callSendEmail } from "@/config/api";
 import { IJob } from "@/types/backend";
 
 interface IState {
@@ -27,7 +27,12 @@ export const searchJob = createAsyncThunk(
     values,
     query,
   }: {
-    values: { skills: string[]; location: string[] };
+    values: {
+      skills: string[];
+      location: string[];
+      level: string;
+      salary?: string;
+    };
     query: string;
   }) => {
     const response = await callSearchJob({ values, query });
@@ -98,6 +103,7 @@ export const jobSlide = createSlice({
         state.isFetching = false;
         state.meta = action.payload.data.meta;
         state.result = action.payload.data.result;
+        console.log(">>> check search job", state.result);
       }
       // Add user to the state array
       // state.courseOrder = action.payload;

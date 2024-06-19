@@ -10,7 +10,7 @@ import {
   EnvironmentOutlined,
   HistoryOutlined,
 } from "@ant-design/icons";
-import { getLocationName } from "@/config/utils";
+import { formatDateFunction, getLocationName } from "@/config/utils";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ApplyModal from "@/components/client/modal/apply.modal";
@@ -25,7 +25,7 @@ const ClientJobDetailPage = (props: any) => {
   let location = useLocation();
   let params = new URLSearchParams(location.search);
   const id = params?.get("id"); // job id
-
+  console.log(">>> check job detail", jobDetail);
   useEffect(() => {
     const init = async () => {
       if (id) {
@@ -55,7 +55,7 @@ const ClientJobDetailPage = (props: any) => {
                     onClick={() => setIsModalOpen(true)}
                     className={styles["btn-apply"]}
                   >
-                    Apply Now
+                    Nộp CV
                   </button>
                 </div>
                 <Divider />
@@ -83,8 +83,30 @@ const ClientJobDetailPage = (props: any) => {
                   <EnvironmentOutlined style={{ color: "#58aaab" }} />
                   &nbsp;{getLocationName(jobDetail.location)}
                 </div>
-                <div>
-                  <HistoryOutlined /> {dayjs(jobDetail.updatedAt).fromNow()}
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "10px",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <HistoryOutlined style={{ marginTop: "4px" }} />
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <div>
+                      {" "}
+                      <b>Ngày đăng:</b>
+                      <span>{formatDateFunction(jobDetail.startDate)}</span>
+                    </div>
+                    <div>
+                      <b>Ngày hết hạn:</b>
+                      <span>{formatDateFunction(jobDetail.endDate)}</span>
+                    </div>
+                  </div>
                 </div>
                 <Divider />
                 {parse(jobDetail.description)}

@@ -12,6 +12,8 @@ import {
   HeartTwoTone,
   BugOutlined,
   ScheduleOutlined,
+  MailOutlined,
+  ApartmentOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Dropdown, Space, message, Avatar, Button } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -39,6 +41,7 @@ const LayoutAdmin = () => {
 
   useEffect(() => {
     if (permissions?.length) {
+      // const viewDashboard = user?.role?.name === "SUPER_ADMIN";
       const viewCompany = permissions.find(
         (item) =>
           item.apiPath === ALL_PERMISSIONS.COMPANIES.GET_PAGINATE.apiPath &&
@@ -74,7 +77,12 @@ const LayoutAdmin = () => {
           item.apiPath === ALL_PERMISSIONS.PERMISSIONS.GET_PAGINATE.apiPath &&
           item.method === ALL_PERMISSIONS.USERS.GET_PAGINATE.method
       );
-
+      const viewMail = permissions.find(
+        (item) =>
+          item.apiPath === ALL_PERMISSIONS.MAILS.SEND_EMAIL.apiPath &&
+          item.method === ALL_PERMISSIONS.MAILS.SEND_EMAIL.method
+      );
+      console.log(">>> check permissions: " + JSON.stringify(permissions));
       const full = [
         {
           label: <Link to="/admin">Dashboard</Link>,
@@ -137,6 +145,15 @@ const LayoutAdmin = () => {
               },
             ]
           : []),
+        ...(viewMail
+          ? [
+              {
+                label: <Link to="/admin/mail">Mail</Link>,
+                key: "/admin/mail",
+                icon: <MailOutlined />,
+              },
+            ]
+          : []),
       ];
 
       setMenuItems(full);
@@ -192,7 +209,8 @@ const LayoutAdmin = () => {
             onCollapse={(value) => setCollapsed(value)}
           >
             <div style={{ height: 32, margin: 16, textAlign: "center" }}>
-              <BugOutlined /> ADMIN
+              <ApartmentOutlined style={{ marginRight: "4px" }} />
+              {user?.role?.name === "HR" ? <>{"HR"}</> : <>{"ADMIN"}</>}
             </div>
             <Menu
               selectedKeys={[activeMenu]}

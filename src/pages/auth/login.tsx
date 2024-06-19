@@ -33,7 +33,6 @@ const LoginPage = () => {
     const res = await callLogin(username, password);
     setIsSubmit(false);
     if (res?.data) {
-      alert("hihi");
       localStorage.setItem("access_token", res.data.access_token);
       dispatch(setUserLoginInfo(res.data.user));
       message.success("Đăng nhập tài khoản thành công!");

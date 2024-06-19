@@ -395,7 +395,7 @@ const ManageAccount = (props: IProps) => {
   const items: TabsProps["items"] = [
     {
       key: "user-resume",
-      label: `Rải CV`,
+      label: `Nộp CV`,
       children: <UserResume />,
     },
     {

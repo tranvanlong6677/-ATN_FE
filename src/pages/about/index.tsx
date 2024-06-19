@@ -43,8 +43,7 @@ const AboutPage = () => {
         <h2>Bạn muốn liên hệ với chúng tôi?</h2>
         <p>
           Tên: Công ty Cổ Phần VieclamIT <br />
-          Địa chỉ văn phòng: Đường xx, Quận yy, Thành phố zz Hồ Chí Minh, Việt
-          Nam <br />
+          Địa chỉ văn phòng: Đường xx, Quận yy, Thành phố zz , Việt Nam <br />
           Mã số thuế: xxxxxxxxxx <br />
         </p>
 
