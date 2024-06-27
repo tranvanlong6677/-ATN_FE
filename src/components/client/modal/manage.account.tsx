@@ -23,11 +23,12 @@ import {
 import type { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
 import { MonitorOutlined } from "@ant-design/icons";
-import { SKILLS_LIST } from "@/config/utils";
+import { SKILLS_LIST, convertSlug } from "@/config/utils";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { changePassword, updateUser } from "@/redux/slice/userSlide";
 import { useForm } from "antd/es/form/Form";
 import { fetchAccount } from "@/redux/slice/accountSlide";
+import { Link } from "react-router-dom";
 
 interface IProps {
   open: boolean;
@@ -49,7 +50,7 @@ interface IUpdateDataUser {
 const UserResume = (props: any) => {
   const [listCV, setListCV] = useState<IResume[]>([]);
   const [isFetching, setIsFetching] = useState<boolean>(false);
-
+  console.log(">>> listCV: " + JSON.stringify(listCV));
   useEffect(() => {
     const init = async () => {
       setIsFetching(true);
@@ -77,7 +78,20 @@ const UserResume = (props: any) => {
     },
     {
       title: "Vị trí",
-      dataIndex: ["jobId", "name"],
+      dataIndex: ["jobId"],
+      render: (text, record, index) => {
+        console.log("check jobId", text, record);
+        return (
+          <Link
+            to={`/job/${convertSlug(text?.name)}?id=${text?._id}`}
+            onClick={() => {
+              props?.onClose(false);
+            }}
+          >
+            {text?.name}
+          </Link>
+        );
+      },
     },
     {
       title: "Trạng thái",
@@ -396,7 +410,7 @@ const ManageAccount = (props: IProps) => {
     {
       key: "user-resume",
       label: `Nộp CV`,
-      children: <UserResume />,
+      children: <UserResume onClose={onClose} />,
     },
     {
       key: "email-by-skills",

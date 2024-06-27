@@ -33,7 +33,7 @@ export interface ICompanySelect {
 
 const ModalUser = (props: IProps) => {
   const { openModal, setOpenModal, reloadTable, dataInit, setDataInit } = props;
-  const [companies, setCompanies] = useState<ICompanySelect[]>([]);
+  const [companies, setCompanies] = useState<ICompanySelect>();
   const [roles, setRoles] = useState<ICompanySelect>();
 
   const [form] = Form.useForm();
@@ -41,13 +41,11 @@ const ModalUser = (props: IProps) => {
   useEffect(() => {
     if (dataInit?._id) {
       if (dataInit.company) {
-        setCompanies([
-          {
-            label: dataInit.company.name,
-            value: dataInit.company._id,
-            key: dataInit.company._id,
-          },
-        ]);
+        setCompanies({
+          label: dataInit.company.name,
+          value: dataInit.company._id,
+          key: dataInit.company._id,
+        });
       }
       if (dataInit.role) {
         setRoles({
@@ -62,6 +60,7 @@ const ModalUser = (props: IProps) => {
   const submitUser = async (valuesForm: any) => {
     const { name, email, password, address, age, gender, role, company } =
       valuesForm;
+    console.log(">>> check submitted values", valuesForm);
     if (dataInit?._id) {
       //update
       const user = {
@@ -72,7 +71,7 @@ const ModalUser = (props: IProps) => {
         age,
         gender,
         address,
-        role: role._id,
+        role: role.key ?? role._id,
         company: {
           _id: company?.value,
           name: company?.label,
@@ -101,8 +100,8 @@ const ModalUser = (props: IProps) => {
         address,
         role: role.value,
         company: {
-          _id: company.value,
-          name: company.label,
+          _id: company?.value,
+          name: company?.label,
         },
       };
       const res = await callCreateUser(user);
@@ -122,7 +121,7 @@ const ModalUser = (props: IProps) => {
   const handleReset = async () => {
     form.resetFields();
     setDataInit(null);
-    setCompanies([]);
+    setCompanies(undefined);
     setRoles({
       label: "",
       key: "",
@@ -254,9 +253,7 @@ const ModalUser = (props: IProps) => {
                 placeholder="Chọn vai trò"
                 fetchOptions={fetchRoleList}
                 onChange={(newValue: any) => {
-                  if (newValue?.length === 0 || newValue?.length === 1) {
-                    setRoles(newValue as ICompanySelect);
-                  }
+                  setRoles(newValue as ICompanySelect);
                 }}
                 style={{ width: "100%" }}
               />
@@ -276,9 +273,10 @@ const ModalUser = (props: IProps) => {
                 placeholder="Chọn công ty"
                 fetchOptions={fetchCompanyList}
                 onChange={(newValue: any) => {
-                  if (newValue?.length === 0 || newValue?.length === 1) {
-                    setCompanies(newValue as ICompanySelect[]);
-                  }
+                  console.log(
+                    ">>> check new value: " + JSON.stringify(newValue)
+                  );
+                  setCompanies(newValue);
                 }}
                 style={{ width: "100%" }}
               />

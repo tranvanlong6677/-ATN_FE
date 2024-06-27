@@ -202,7 +202,6 @@ const Header = (props: any) => {
                       <Space style={{ cursor: "pointer" }}>
                         <span>Welcome {user?.name}</span>
                         <Avatar>
-                          {" "}
                           {user?.name?.substring(0, 2)?.toUpperCase()}{" "}
                         </Avatar>
                       </Space>
