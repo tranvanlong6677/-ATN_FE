@@ -15,6 +15,18 @@ export const SKILLS_LIST = [
   { label: "Spring Boot", value: "SPRINGBOOT" },
   { label: "IT Support", value: "ITSUPPORT" },
   { label: "Tester", value: "TESTER" },
+  { label: "Business Analyst", value: "BA" },
+  { label: "English", value: "ENGLISH" },
+  { label: "Japanese", value: "JAPANESE" },
+  { label: "PHP", value: "PHP" },
+  { label: "Laravel", value: "LARAVEL" },
+  { label: "Python", value: "PYTHON" },
+  { label: "Django", value: "DJANGO" },
+  { label: "Unity", value: "UNITY" },
+  { label: "MySQL", value: "MySQL" },
+  { label: "MongoDB", value: "MONGODB" },
+  { label: "Posgresql", value: "POSGRESQL" },
+  { label: "SQL Server", value: "SQLSERVER" },
 ];
 
 export const LEVEL_LIST = [
