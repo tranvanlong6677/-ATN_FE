@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { callFetchJob, callSearchJob, callSendEmail } from "@/config/api";
+import {
+  callFetchJob,
+  callFetchJobByCompany,
+  callSearchJob,
+  callSendEmail,
+} from "@/config/api";
 import { IJob } from "@/types/backend";
 
 interface IState {
@@ -11,12 +16,22 @@ interface IState {
     total: number;
   };
   result: IJob[];
+  resultByCompany: IJob[];
 }
 // First, create the thunk
 export const fetchJob = createAsyncThunk(
   "job/fetchJob",
   async ({ query }: { query: string }) => {
+    console.log(">>> check query", query);
     const response = await callFetchJob(query);
+    return response;
+  }
+);
+
+export const fetchJobByCompany = createAsyncThunk(
+  "job/fetchJobByCompany",
+  async ({ query }: { query: string }) => {
+    const response = await callFetchJobByCompany(query);
     return response;
   }
 );
@@ -49,6 +64,7 @@ const initialState: IState = {
     total: 0,
   },
   result: [],
+  resultByCompany: [],
 };
 
 export const jobSlide = createSlice({
@@ -105,6 +121,29 @@ export const jobSlide = createSlice({
         state.result = action.payload.data.result;
       }
       // Add user to the state array
+      // state.courseOrder = action.payload;
+    });
+
+    builder.addCase(fetchJobByCompany.pending, (state, action) => {
+      state.isFetching = true;
+      // Add user to the state array
+      // state.courseOrder = action.payload;
+    });
+
+    builder.addCase(fetchJobByCompany.rejected, (state, action) => {
+      state.isFetching = false;
+      // Add user to the state array
+      // state.courseOrder = action.payload;
+    });
+
+    builder.addCase(fetchJobByCompany.fulfilled, (state, action) => {
+      if (action.payload && action.payload.data) {
+        state.isFetching = false;
+        state.meta = action.payload.data.meta;
+        state.resultByCompany = action.payload.data.result;
+      }
+      // Add user to the state array
+
       // state.courseOrder = action.payload;
     });
   },

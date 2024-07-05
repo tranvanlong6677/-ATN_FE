@@ -21,7 +21,7 @@ import dayjs from "dayjs";
 import { callDeleteJob } from "@/config/api";
 import queryString from "query-string";
 import { useNavigate } from "react-router-dom";
-import { fetchJob } from "@/redux/slice/jobSlide";
+import { fetchJob, fetchJobByCompany } from "@/redux/slice/jobSlide";
 import Access from "@/components/share/access";
 import { ALL_PERMISSIONS } from "@/config/permissions";
 
@@ -31,9 +31,9 @@ const JobPage = () => {
   const isFetching = useAppSelector((state) => state.job.isFetching);
   const meta = useAppSelector((state) => state.job.meta);
   const jobs = useAppSelector((state) => state.job.result);
+  const jobsByCompany = useAppSelector((state) => state.job.resultByCompany);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
   const handleDeleteJob = async (_id: string | undefined) => {
     if (_id) {
       const res = await callDeleteJob(_id);
@@ -234,10 +234,14 @@ const JobPage = () => {
           rowKey="_id"
           loading={isFetching}
           columns={columns}
-          dataSource={jobs}
+          dataSource={user?.role?.name === "HR" ? jobsByCompany : jobs}
           request={async (params, sort, filter): Promise<any> => {
             const query = buildQuery(params, sort, filter);
-            dispatch(fetchJob({ query }));
+            if (user?.role?.name === "HR") {
+              dispatch(fetchJobByCompany({ query }));
+            } else {
+              dispatch(fetchJob({ query }));
+            }
           }}
           scroll={{ x: true }}
           pagination={{
