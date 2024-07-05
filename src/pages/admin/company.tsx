@@ -50,7 +50,13 @@ const CompanyPage = () => {
       width: 50,
       align: "center",
       render: (text, record, index) => {
-        return <>{index + 1 + (meta.current - 1) * meta.pageSize}</>;
+        return (
+          <>
+            {index +
+              1 +
+              ((meta.current >= 1 ? meta.current : 1) - 1) * meta.pageSize}
+          </>
+        );
       },
       hideInSearch: true,
     },
@@ -196,7 +202,7 @@ const CompanyPage = () => {
               return (
                 <div>
                   {" "}
-                  {range[0]}-{range[1]} trên {total} rows
+                  {range[0]}-{range[1]} / {total}
                 </div>
               );
             },
