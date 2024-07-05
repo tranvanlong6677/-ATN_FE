@@ -202,7 +202,7 @@ const CompanyPage = () => {
               return (
                 <div>
                   {" "}
-                  {range[0]}-{range[1]} / {total}
+                  {range[0]}-{range[1]} trên {total} hàng
                 </div>
               );
             },

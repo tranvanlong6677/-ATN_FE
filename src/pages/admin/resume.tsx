@@ -219,7 +219,7 @@ const ResumePage = () => {
               return (
                 <div>
                   {" "}
-                  {range[0]}-{range[1]} trên {total} rows
+                  {range[0]}-{range[1]} trên {total} hàng
                 </div>
               );
             },
