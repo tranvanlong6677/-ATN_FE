@@ -15,7 +15,6 @@ const MailPage = () => {
   const sendEmailFunc = async () => {
     try {
       const res = await dispatch(sendEmail());
-      console.log(">>> check email: " + JSON.stringify(res));
       if (+res.payload.statusCode === 200) {
         notification.success({
           message: "Gửi email thành công",
@@ -29,7 +28,6 @@ const MailPage = () => {
       });
     }
   };
-  console.log(">>> check isFetching", isLoading);
   return (
     <>
       {isLoading ? (

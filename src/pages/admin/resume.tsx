@@ -192,7 +192,6 @@ const ResumePage = () => {
     temp +=
       "&populate=companyId,jobId&fields=companyId._id, companyId.name, companyId.logo, jobId._id, jobId.name";
 
-    console.log(">>> check temp: " + temp);
     return temp;
   };
 

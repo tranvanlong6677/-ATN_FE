@@ -30,7 +30,6 @@ const Header = (props: any) => {
     (state) => state.account.isAuthenticated
   );
   const user = useAppSelector((state) => state.account.user);
-  console.log(">>> check user", user);
   const [openMobileMenu, setOpenMobileMenu] = useState<boolean>(false);
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const [current, setCurrent] = useState("home");

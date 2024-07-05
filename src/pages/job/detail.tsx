@@ -25,7 +25,6 @@ const ClientJobDetailPage = (props: any) => {
   let location = useLocation();
   let params = new URLSearchParams(location.search);
   const id = params?.get("id"); // job id
-  console.log(">>> check job detail", jobDetail);
   useEffect(() => {
     const init = async () => {
       if (id) {

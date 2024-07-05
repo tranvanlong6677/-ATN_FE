@@ -82,7 +82,6 @@ const LayoutAdmin = () => {
           item.apiPath === ALL_PERMISSIONS.MAILS.SEND_EMAIL.apiPath &&
           item.method === ALL_PERMISSIONS.MAILS.SEND_EMAIL.method
       );
-      console.log(">>> check permissions: " + JSON.stringify(permissions));
       const full = [
         {
           label: <Link to="/admin">Dashboard</Link>,

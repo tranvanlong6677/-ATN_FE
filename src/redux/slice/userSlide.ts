@@ -36,7 +36,6 @@ export const changePassword = createAsyncThunk(
   }) => {
     try {
       const response = await callChangePassword({ oldPassword, newPassword });
-      //   console.log()
       return response;
     } catch (error) {
       console.log(error);
@@ -123,7 +122,6 @@ export const userSlide = createSlice({
     builder.addCase(changePassword.fulfilled, (state, action) => {
       if (action.payload && action.payload.data) {
         state.isFetching = false;
-        console.log(action);
       }
       // Add user to the state array
 
@@ -145,7 +143,6 @@ export const userSlide = createSlice({
     builder.addCase(updateUser.fulfilled, (state, action) => {
       if (action.payload && action.payload.data) {
         state.isFetching = false;
-        console.log(action);
       }
       // Add user to the state array
 

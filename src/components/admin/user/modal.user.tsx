@@ -60,7 +60,6 @@ const ModalUser = (props: IProps) => {
   const submitUser = async (valuesForm: any) => {
     const { name, email, password, address, age, gender, role, company } =
       valuesForm;
-    console.log(">>> check submitted values", valuesForm);
     if (dataInit?._id) {
       //update
       const user = {
@@ -273,9 +272,6 @@ const ModalUser = (props: IProps) => {
                 placeholder="Chọn công ty"
                 fetchOptions={fetchCompanyList}
                 onChange={(newValue: any) => {
-                  console.log(
-                    ">>> check new value: " + JSON.stringify(newValue)
-                  );
                   setCompanies(newValue);
                 }}
                 style={{ width: "100%" }}

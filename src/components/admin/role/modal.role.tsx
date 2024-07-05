@@ -55,7 +55,6 @@ const ModalRole = (props: IProps) => {
     const init = async () => {
       const res = await callFetchPermission(`current=1&pageSize=100`);
       if (res.data?.result) {
-        console.log(">>> check permissions", res.data.result);
         setListPermissions(groupByPermission(res.data?.result));
       }
     };

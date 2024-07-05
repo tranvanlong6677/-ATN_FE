@@ -214,7 +214,6 @@ export const callSearchJob = ({
   };
   query: string;
 }) => {
-  console.log(">>> check values: " + JSON.stringify(values));
   return axios.post<IBackendRes<IModelPaginate<IJob>>>(
     `/api/v1/jobs/search-jobs`,
     {

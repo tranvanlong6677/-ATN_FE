@@ -151,7 +151,6 @@ const JobCard = (props: IProps) => {
             </Col>
 
             {displayJob?.map((item) => {
-              console.log(">>> check item: " + JSON.stringify(item));
               return (
                 <Col span={24} md={12} key={item._id}>
                   <Card

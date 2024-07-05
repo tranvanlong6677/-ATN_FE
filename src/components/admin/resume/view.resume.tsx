@@ -27,8 +27,6 @@ const ViewDetailResume = (props: IProps) => {
   const { onClose, open, dataInit, setDataInit, reloadTable } = props;
   const [form] = Form.useForm();
 
-  console.log(">>> check dataInit", dataInit);
-
   const handleChangeStatus = async () => {
     setIsSubmit(true);
 

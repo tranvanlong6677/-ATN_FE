@@ -52,7 +52,6 @@ const ViewUpsertJob = (props: any) => {
   const id = params?.get("id"); // job id
   const [dataUpdate, setDataUpdate] = useState<IJob | null>(null);
   const [form] = Form.useForm();
-  console.log("form.getFieldValue", form.getFieldValue("company"), companies);
   useEffect(() => {
     const init = async () => {
       if (id) {
@@ -92,7 +91,6 @@ const ViewUpsertJob = (props: any) => {
   useEffect(() => {
     form.setFieldValue("company", companies);
   }, [companies]);
-  console.log("companies change", companies);
   const fetchCompanyByHR = async () => {
     const res = await callFetchCompany(
       `current=1&pageSize=100&name=/${name}/i`
@@ -191,7 +189,6 @@ const ViewUpsertJob = (props: any) => {
       }
     } else {
       //create
-      console.log(">>> check values create", values);
       const cp = values?.company[0]?.value?.split("@#$");
       const job = {
         name: values.name,
@@ -212,7 +209,6 @@ const ViewUpsertJob = (props: any) => {
       };
 
       const res = await callCreateJob(job);
-      console.log(job);
       if (res.data) {
         message.success("Tạo mới job thành công");
         navigate("/admin/job");
@@ -394,11 +390,6 @@ const ViewUpsertJob = (props: any) => {
                   label="Ngày kết thúc"
                   name="endDate"
                   normalize={(value) => {
-                    console.log(">>> check value: " + value);
-                    console.log(
-                      ">>> check dayjs " + dayjs(value, "DD/MM/YYYY")
-                    );
-
                     return value && dayjs(value, "DD/MM/YYYY");
                   }}
                   fieldProps={{

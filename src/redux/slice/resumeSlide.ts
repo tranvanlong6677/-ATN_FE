@@ -61,7 +61,6 @@ export const resumeSlide = createSlice({
         state.isFetching = false;
         state.meta = action.payload.data.meta;
         state.result = action.payload.data.result;
-        console.log(">>> check state.result: " + JSON.stringify(state.result));
       }
       // Add user to the state array
 

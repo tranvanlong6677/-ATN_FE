@@ -41,7 +41,6 @@ const SearchClient = () => {
   const [sortQuery, setSortQuery] = useState("sort=-updatedAt");
 
   const onFinish = async (values: FieldType) => {
-    console.log(">>> check values: " + JSON.stringify(values));
     localStorage.setItem("isSearching", "true");
 
     let query = `current=${current}&pageSize=${pageSize}`;

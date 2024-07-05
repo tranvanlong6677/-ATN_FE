@@ -103,7 +103,6 @@ export const jobSlide = createSlice({
         state.isFetching = false;
         state.meta = action.payload.data.meta;
         state.result = action.payload.data.result;
-        console.log(">>> check search job", state.result);
       }
       // Add user to the state array
       // state.courseOrder = action.payload;

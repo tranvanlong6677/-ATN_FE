@@ -50,7 +50,6 @@ interface IUpdateDataUser {
 const UserResume = (props: any) => {
   const [listCV, setListCV] = useState<IResume[]>([]);
   const [isFetching, setIsFetching] = useState<boolean>(false);
-  console.log(">>> listCV: " + JSON.stringify(listCV));
   useEffect(() => {
     const init = async () => {
       setIsFetching(true);
@@ -80,7 +79,6 @@ const UserResume = (props: any) => {
       title: "Vị trí",
       dataIndex: ["jobId"],
       render: (text, record, index) => {
-        console.log("check jobId", text, record);
         return (
           <Link
             to={`/job/${convertSlug(text?.name)}?id=${text?._id}`}
