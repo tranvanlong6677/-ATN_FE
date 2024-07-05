@@ -6,6 +6,7 @@ export const SKILLS_LIST = [
   { label: "Vue.JS", value: "VUE.JS" },
   { label: "Angular", value: "ANGULAR" },
   { label: "Nest.JS", value: "NEST.JS" },
+  { label: "NodeJS", value: "NODEJS" },
   { label: "TypeScript", value: "TYPESCRIPT" },
   { label: "Java", value: "JAVA" },
   { label: "Frontend", value: "FRONTEND" },
@@ -50,6 +51,8 @@ export const LOCATION_LIST = [
   { label: "Đà Nẵng", value: "DANANG" },
   { label: "Thanh Hóa", value: "THANHHOA" },
   { label: "Hà Nam", value: "HANAM" },
+  { label: "Bắc Ning", value: "BACNINH" },
+
   // { label: "Others", value: "OTHER" },
   // { label: "Tất cả thành phố", value: "ALL" },
 ];
