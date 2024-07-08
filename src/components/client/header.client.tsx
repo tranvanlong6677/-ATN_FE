@@ -146,6 +146,7 @@ const Header = (props: any) => {
               <label
                 style={{ cursor: "pointer" }}
                 onClick={() => handleLogout()}
+                className="item-dropdown-label-header"
               >
                 Đăng xuất
               </label>
@@ -197,6 +198,7 @@ const Header = (props: any) => {
                     <Dropdown
                       menu={{ items: itemsDropdown }}
                       trigger={["click"]}
+                      className="dropdown-header-client"
                     >
                       <Space style={{ cursor: "pointer" }}>
                         <span>Welcome {user?.name}</span>

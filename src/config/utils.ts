@@ -28,6 +28,13 @@ export const SKILLS_LIST = [
   { label: "MongoDB", value: "MONGODB" },
   { label: "Posgresql", value: "POSGRESQL" },
   { label: "SQL Server", value: "SQLSERVER" },
+  { label: "C++", value: "CPP" },
+  { label: "Kotlin", value: "KOTLIN" },
+  { label: "Android", value: "ANDROID" },
+  { label: "Swift", value: "SWIFT" },
+  { label: "IOS", value: "IOS" },
+  { label: "Wordpress", value: "WORDPRESS" },
+  { label: "C#", value: "C#" },
 ];
 
 export const LEVEL_LIST = [
@@ -51,7 +58,7 @@ export const LOCATION_LIST = [
   { label: "Đà Nẵng", value: "DANANG" },
   { label: "Thanh Hóa", value: "THANHHOA" },
   { label: "Hà Nam", value: "HANAM" },
-  { label: "Bắc Ning", value: "BACNINH" },
+  { label: "Bắc Ninh", value: "BACNINH" },
 
   // { label: "Others", value: "OTHER" },
   // { label: "Tất cả thành phố", value: "ALL" },
