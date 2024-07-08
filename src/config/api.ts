@@ -194,8 +194,16 @@ export const callDeleteJob = (id: string) => {
   return axios.delete<IBackendRes<IJob>>(`/api/v1/jobs/${id}`);
 };
 
-export const callFetchJob = (query: string) => {
-  return axios.get<IBackendRes<IModelPaginate<IJob>>>(`/api/v1/jobs?${query}`);
+export const callFetchJob = (query: string, isAdminPage?: boolean) => {
+  if (isAdminPage === true) {
+    return axios.post<IBackendRes<IModelPaginate<IJob>>>(
+      `/api/v1/jobs/admin-page?${query}`
+    );
+  } else {
+    return axios.get<IBackendRes<IModelPaginate<IJob>>>(
+      `/api/v1/jobs?${query}`
+    );
+  }
 };
 export const callFetchJobByCompany = (query: string) => {
   return axios.post<IBackendRes<IModelPaginate<IJob>>>(

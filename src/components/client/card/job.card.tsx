@@ -1,4 +1,3 @@
-import { callFetchJob } from "@/config/api";
 import {
   LOCATION_LIST,
   convertSlug,
@@ -94,23 +93,6 @@ const JobCard = (props: IProps) => {
       dispatch(fetchJob({ query }));
     }
   }, [current, pageSize, filter, sortQuery]);
-
-  const fetchJobComponent = async () => {
-    setIsLoading(true);
-    let query = `current=${current}&pageSize=${pageSize}`;
-    if (filter) {
-      query += `&${filter}`;
-    }
-    if (sortQuery) {
-      query += `&${sortQuery}`;
-    }
-
-    const res = await callFetchJob(query);
-    if (res && res.data) {
-      //   setDisplayJob(res.data.result);
-    }
-    setIsLoading(false);
-  };
 
   const handleOnchangePage = (pagination: {
     current: number;

@@ -21,9 +21,16 @@ interface IState {
 // First, create the thunk
 export const fetchJob = createAsyncThunk(
   "job/fetchJob",
-  async ({ query }: { query: string }) => {
+  async ({
+    query,
+    isAdminPage = false,
+  }: {
+    query: string;
+    isAdminPage?: boolean;
+  }) => {
     console.log(">>> check query", query);
-    const response = await callFetchJob(query);
+
+    const response = await callFetchJob(query, isAdminPage);
     return response;
   }
 );
@@ -96,6 +103,7 @@ export const jobSlide = createSlice({
         state.isFetching = false;
         state.meta = action.payload.data.meta;
         state.result = action.payload.data.result;
+        console.log(">>> check action.payload", action.payload);
       }
       // Add user to the state array
 

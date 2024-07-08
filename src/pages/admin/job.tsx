@@ -189,7 +189,7 @@ const JobPage = () => {
       },
     },
   ];
-
+  console.log(">>> check jobs", jobs);
   const buildQuery = (params: any, sort: any, filter: any) => {
     const clone = { ...params };
     if (clone.name) clone.name = `/${clone.name}/i`;
@@ -240,7 +240,7 @@ const JobPage = () => {
             if (user?.role?.name === "HR") {
               dispatch(fetchJobByCompany({ query }));
             } else {
-              dispatch(fetchJob({ query }));
+              dispatch(fetchJob({ query, isAdminPage: true }));
             }
           }}
           scroll={{ x: true }}

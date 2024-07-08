@@ -21,7 +21,7 @@ const ClientJobDetailPage = (props: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
+  console.log(">>> check job detali", jobDetail);
   let location = useLocation();
   let params = new URLSearchParams(location.search);
   const id = params?.get("id"); // job id
@@ -53,8 +53,9 @@ const ClientJobDetailPage = (props: any) => {
                   <button
                     onClick={() => setIsModalOpen(true)}
                     className={styles["btn-apply"]}
+                    disabled={jobDetail?.isActive === true ? false : true}
                   >
-                    Nộp CV
+                    {jobDetail?.isActive === true ? "Nộp CV" : "Hết hạn"}
                   </button>
                 </div>
                 <Divider />

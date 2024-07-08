@@ -403,7 +403,7 @@ const ViewUpsertJob = (props: any) => {
                 />
               </Col>
               <Col span={24} md={6}>
-                {/* <ProFormSwitch
+                <ProFormSwitch
                   label="Trạng thái"
                   name="isActive"
                   checkedChildren="ACTIVE"
@@ -412,7 +412,7 @@ const ViewUpsertJob = (props: any) => {
                   fieldProps={{
                     defaultChecked: true,
                   }}
-                /> */}
+                />
               </Col>
               <Col span={24}>
                 <ProForm.Item

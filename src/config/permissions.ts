@@ -41,6 +41,11 @@ export const ALL_PERMISSIONS = {
       apiPath: "/api/v1/jobs/by-company",
       module: "JOBS",
     },
+    GET_PAGINATE_IN_ADMIN_PAGE_BY_ADMIN: {
+      method: "POST",
+      apiPath: "/api/v1/jobs/admin-page",
+      module: "JOBS",
+    },
   },
   PERMISSIONS: {
     GET_PAGINATE: {

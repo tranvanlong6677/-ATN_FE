@@ -14,7 +14,6 @@ import {
 } from "@/config/utils";
 import { ProForm } from "@ant-design/pro-components";
 import { useState } from "react";
-import { callFetchJob, callSearchJob } from "@/config/api";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/redux/hooks";
 import { searchJob } from "@/redux/slice/jobSlide";
