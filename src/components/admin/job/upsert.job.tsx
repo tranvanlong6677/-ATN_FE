@@ -41,6 +41,7 @@ import localeData from "dayjs/plugin/localeData";
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
+
 const ViewUpsertJob = (props: any) => {
   const [companies, setCompanies] = useState<ICompanySelect[]>([]);
   const user = useAppSelector((state) => state.account.user);
@@ -156,25 +157,25 @@ const ViewUpsertJob = (props: any) => {
       //update
       const cp = values?.company[0]?.value?.split("@#$");
       const job = {
-        name: values.name,
-        skills: values.skills,
+        name: values?.name,
+        skills: values?.skills,
         company: {
           _id: cp && cp.length > 0 ? cp[0] : "",
-          name: values.company[0].label,
+          name: values?.company[0].label,
           logo: cp && cp.length > 1 ? cp[1] : "",
         },
-        location: values.location,
-        salary: values.salary,
-        quantity: values.quantity,
-        level: values.level,
+        location: values?.location,
+        salary: values?.salary,
+        quantity: values?.quantity,
+        level: values?.level,
         description: value,
-        startDate: /[0-9]{2}[/][0-9]{2}[/][0-9]{4}$/.test(values.startDate)
-          ? dayjs(values.startDate, "DD/MM/YYYY").toDate()
-          : values.startDate,
-        endDate: /[0-9]{2}[/][0-9]{2}[/][0-9]{4}$/.test(values.endDate)
-          ? dayjs(values.endDate, "DD/MM/YYYY").toDate()
-          : values.endDate,
-        isActive: values.isActive,
+        startDate: /[0-9]{2}[/][0-9]{2}[/][0-9]{4}$/.test(values?.startDate)
+          ? dayjs(values?.startDate, "DD/MM/YYYY")?.toDate()
+          : values?.startDate,
+        endDate: /[0-9]{2}[/][0-9]{2}[/][0-9]{4}$/.test(values?.endDate)
+          ? dayjs(values?.endDate, "DD/MM/YYYY")?.toDate()
+          : values?.endDate,
+        isActive: values?.isActive,
       };
 
       const res = await callUpdateJob(job, dataUpdate._id);
@@ -191,21 +192,21 @@ const ViewUpsertJob = (props: any) => {
       //create
       const cp = values?.company[0]?.value?.split("@#$");
       const job = {
-        name: values.name,
-        skills: values.skills,
+        name: values?.name,
+        skills: values?.skills,
         company: {
           _id: cp && cp.length > 0 ? cp[0] : "",
-          name: values.company[0].label,
+          name: values?.company[0].label,
           logo: cp && cp.length > 1 ? cp[1] : "",
         },
-        location: values.location,
-        salary: values.salary,
-        quantity: values.quantity,
-        level: values.level,
+        location: values?.location,
+        salary: values?.salary,
+        quantity: values?.quantity,
+        level: values?.level,
         description: value,
-        startDate: dayjs(values.startDate, "DD/MM/YYYY").toDate(),
-        endDate: dayjs(values.endDate, "DD/MM/YYYY").toDate(),
-        isActive: values.isActive,
+        startDate: dayjs(values?.startDate, "DD/MM/YYYY").toDate(),
+        endDate: dayjs(values?.endDate, "DD/MM/YYYY").toDate(),
+        isActive: values?.isActive,
       };
 
       const res = await callCreateJob(job);
@@ -395,7 +396,6 @@ const ViewUpsertJob = (props: any) => {
                   fieldProps={{
                     format: "DD/MM/YYYY",
                   }}
-                  // width="auto"
                   rules={[
                     { required: true, message: "Vui lòng chọn ngày cấp" },
                   ]}
