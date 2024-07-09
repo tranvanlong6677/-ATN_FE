@@ -133,6 +133,7 @@ const UserResume = (props: any) => {
 
 const UserUpdateInfo = () => {
   const user = useAppSelector((state) => state.account.user);
+  console.log(">>> check user", user);
   const [form] = useForm();
   const dispatch = useAppDispatch();
   const onFinish: FormProps<IUpdateDataUser>["onFinish"] = async (values) => {

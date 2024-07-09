@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import {
+  BookOutlined,
   CodeOutlined,
   ContactsOutlined,
   DashOutlined,
@@ -104,7 +105,22 @@ const Header = (props: any) => {
           //   label: <Link to={"/admin"}>Trang quản trị </Link>,
           //   key: "admin",
           //   icon: <DashOutlined />,
-          // },
+          // },https://www.topcv.vn/mau-cv
+          {
+            label: (
+              // <label
+              //   style={{ cursor: "pointer" }}
+              //   onClick={() =>
+              //     window.location.replace("https://www.topcv.vn/mau-cv")
+              //   }
+              // >
+              //   Tạo CV online
+              // </label>
+              <a href="https://www.topcv.vn/mau-cv">Tạo CV online</a>
+            ),
+            key: "create-cv",
+            icon: <BookOutlined />,
+          },
           {
             label: (
               <label
@@ -130,6 +146,11 @@ const Header = (props: any) => {
             ),
             key: "manage-account",
             icon: <ContactsOutlined />,
+          },
+          {
+            label: <a href="https://www.topcv.vn/mau-cv">Tạo CV online</a>,
+            key: "create-cv",
+            icon: <BookOutlined />,
           },
           {
             label: (
@@ -169,7 +190,11 @@ const Header = (props: any) => {
                 <img
                   src={imgLogo}
                   alt=""
-                  style={{ width: "55px", cursor: "pointer" }}
+                  style={{
+                    width: "55px",
+                    cursor: "pointer",
+                    borderRadius: "10px",
+                  }}
                   onClick={() => navigate("/")}
                   title="Tìm việc IT"
                 />

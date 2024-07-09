@@ -9,7 +9,12 @@ const Footer = () => {
     <footer className={`footer-wrapper`}>
       {/* <Container></Container> */}
       <div className={`${styles["container"]} container`}>
-        <img className="logo-image" src={logo} alt="" />
+        <img
+          className="logo-image"
+          src={logo}
+          alt=""
+          style={{ borderRadius: "20px" }}
+        />
 
         <div className="footer-info">
           <div className="for-web">
@@ -21,7 +26,7 @@ const Footer = () => {
                   navigate("/about");
                 }}
               >
-                Về vieclamit.com
+                Về VieclamIT.com
               </li>
             </ul>
           </div>

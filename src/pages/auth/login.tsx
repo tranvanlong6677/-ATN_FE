@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setUserLoginInfo } from "@/redux/slice/accountSlide";
 import styles from "styles/auth.module.scss";
 import { useAppSelector } from "@/redux/hooks";
+import imgLogo from "/logo.jpg";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -51,9 +52,13 @@ const LoginPage = () => {
   };
 
   return (
-    <div className={styles["login-page"]}>
+    <div className={`${styles["login-page"]} login-page-container`}>
       <main className={styles.main}>
-        <div className={styles.container}>
+        <div className={`${styles.container} login-child-container`}>
+          <div className="wrapper-page-name">
+            <img src={imgLogo} alt="" />
+            <h1 style={{ fontStyle: "italic" }}>VieclamIT.com </h1>
+          </div>
           <section className={styles.wrapper}>
             <div className={styles.heading}>
               <h2 className={`${styles.text} ${styles["text-large"]}`}>

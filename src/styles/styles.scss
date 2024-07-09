@@ -95,9 +95,12 @@
 .img-logo-home {
   width: 150px;
   height: 150px;
+  border-radius: 20px;
+
   @media (min-width: 1000px) {
     width: 150px;
     height: 150px;
+    border-radius: 20px;
   }
 }
 
@@ -166,4 +169,21 @@ body {
 .item-dropdown-label-header {
   display: block;
   width: 100%;
+}
+
+.login-child-container {
+  flex-direction: column;
+  .wrapper-page-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+      font-size: 20px;
+    }
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 20px;
+    }
+  }
 }
