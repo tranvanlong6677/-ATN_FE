@@ -80,14 +80,20 @@ const UserResume = (props: any) => {
       dataIndex: ["jobId"],
       render: (text, record, index) => {
         return (
-          <Link
-            to={`/job/${convertSlug(text?.name)}?id=${text?._id}`}
-            onClick={() => {
-              props?.onClose(false);
-            }}
-          >
-            {text?.name}
-          </Link>
+          <>
+            {text?.name && text?._id ? (
+              <Link
+                to={`/job/${convertSlug(text?.name)}?id=${text?._id}`}
+                onClick={() => {
+                  props?.onClose(false);
+                }}
+              >
+                {text?.name}
+              </Link>
+            ) : (
+              <>Not Found</>
+            )}
+          </>
         );
       },
     },
@@ -109,9 +115,13 @@ const UserResume = (props: any) => {
       render(value, record, index) {
         return (
           <>
-            <a href={`${record.url}`} target="_blank">
-              Chi tiết CV
-            </a>
+            {record?.url ? (
+              <a href={`${record?.url}`} target="_blank">
+                Chi tiết CV
+              </a>
+            ) : (
+              <>Not Found</>
+            )}
           </>
         );
       },
