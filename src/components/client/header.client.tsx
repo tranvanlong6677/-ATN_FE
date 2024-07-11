@@ -106,21 +106,7 @@ const Header = (props: any) => {
           //   key: "admin",
           //   icon: <DashOutlined />,
           // },https://www.topcv.vn/mau-cv
-          {
-            label: (
-              // <label
-              //   style={{ cursor: "pointer" }}
-              //   onClick={() =>
-              //     window.location.replace("https://www.topcv.vn/mau-cv")
-              //   }
-              // >
-              //   Tạo CV online
-              // </label>
-              <a href="https://www.topcv.vn/mau-cv">Tạo CV online</a>
-            ),
-            key: "create-cv",
-            icon: <BookOutlined />,
-          },
+
           {
             label: (
               <label
@@ -146,11 +132,6 @@ const Header = (props: any) => {
             ),
             key: "manage-account",
             icon: <ContactsOutlined />,
-          },
-          {
-            label: <a href="https://www.topcv.vn/mau-cv">Tạo CV online</a>,
-            key: "create-cv",
-            icon: <BookOutlined />,
           },
           {
             label: (
